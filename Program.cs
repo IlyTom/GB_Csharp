@@ -1,41 +1,67 @@
-﻿// Task
-//Написать программу-калькулятор, вычисляющую выражения вида a + b, a - b, a / b, a * b, введенные из командной строки, и выводящую результат выполнения на экран.
-if (args.Length == 3)
+﻿// Task2
+/*Дан двумерный массив.
+
+732
+
+496
+
+185
+
+Отсортировать данные в нем по возрастанию.
+
+123
+
+456
+
+789*/
+
+int[,] a = { { 7, 3, 2 }, { 4, 9, 6 }, { 1, 8, 5 } };
+
+int[] arraySort = new int[a.GetLength(0) * a.GetLength(1)];
+
+for (int i = 0; i < a.GetLength(0); i++)
 {
-    double result;
-    if (double.TryParse(args[0], out double valueOne) && (double.TryParse(args[2], out double valueTwo)))
+    for (int j = 0; j < a.GetLength(1); j++)
     {
-        if (args[1] == "+" || args[1] == "-" || args[1] == "/" || args[1] == "*")
+        if (i == 0)
         {
-            if (args[1] == "+")
-            {
-                Console.WriteLine($"{valueOne} + {valueTwo} = {valueOne + valueTwo}");
-            }
-            if (args[1] == "-")
-            {
-                Console.WriteLine($"{valueOne} - {valueTwo} = {valueOne - valueTwo}");
-            }
-            if (args[1] == "/")
-            {
-                Console.WriteLine($"{valueOne} / {valueTwo} = {valueOne / valueTwo}");
-            }
-            if (args[1] == "*")
-            {
-                Console.WriteLine($"{valueOne} * {valueTwo} = {valueOne * valueTwo}");
-            }
+            arraySort[j] = a[i, j];
         }
-        else
+        else if (i == 1)
         {
-            Console.WriteLine("Вы ввели неправильный оператор (+,-,/,*) или порядок аргументов (число_1 оператор число_2)");
+            arraySort[a.GetLength(0) + j] = a[i, j];
+        }
+        else if (i == 2)
+        {
+            arraySort[a.GetLength(1) + a.GetLength(0) + j] = a[i, j];
         }
     }
-    else
-    {
-        Console.WriteLine("Вы ввели неправильный оператор (+,-,/,*) или порядок аргументов (число_1 оператор число_2)");
-    }
-}
-else
-{
-    Console.WriteLine("Вы ввели неправильный оператор (+,-,/,*) или порядок аргументов (число_1 оператор число_2)");
 }
 
+Array.Sort(arraySort);
+
+for (int i = 0; i < arraySort.Length; i++)
+{
+    if (i <= 2)
+    {
+        a[0,i] = arraySort[i];
+    }
+    else if ((i > 2) && (i <= 5))
+    {
+        a[1,i-a.GetLength(0)] = arraySort[i];
+    }
+    else if ((i > 5) && (i <= 8))
+    {
+        a[2,i-a.GetLength(0)-a.GetLength(1)] = arraySort[i];
+    }
+}
+
+
+for (int i = 0;i< a.GetLength(0); i++)
+{
+    for (int j = 0; j < a.GetLength(1); j++)
+    {
+        Console.Write($" {a[i,j]} ");
+    }
+    Console.WriteLine();
+}
